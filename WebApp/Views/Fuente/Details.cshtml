@@ -1,8 +1,7 @@
 ﻿@model Models.Fuente
+@Scripts.Render("~/Chart.js")
 
-@{
-    ViewBag.Title = "Details";
-}
+@{ ViewBag.Title = "Details"; }
 
 <h2>Details</h2>
 
@@ -52,6 +51,49 @@
 
     </dl>
 </div>
+<table class="table">
+    <tr>
+        <th>
+            Letra
+        </th>
+        <th>
+            Probabilidad
+        </th>
+        <th>
+            Informacion
+        </th>
+        <th>
+            Codigo
+        </th>
+        <th>
+            Frecuencia de aparicion
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model.Letras.OrderBy(x => x.FrecuenciaDeAparicion))
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Probability)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Information)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Codigo)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.FrecuenciaDeAparicion)
+    </td>
+</tr>}
+
+</table>
+
+
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.IdFuente }) |
     @Html.ActionLink("Back to List", "Index")

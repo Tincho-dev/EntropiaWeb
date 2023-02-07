@@ -4,7 +4,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Model;
 using Owin;
-using Persistanse;
+using Persistence;
 using Services.Auth;
 using System;
 

@@ -97,9 +97,9 @@
       <Project>{EC9719DB-101B-4451-B9D1-51308B517506}</Project>
       <Name>Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Persistanse\Persistance.csproj">
+    <ProjectReference Include="..\Persistanse\Persistence.csproj">
       <Project>{CF9BAC44-EA14-4784-9B1D-5BA1C358677D}</Project>
-      <Name>Persistance</Name>
+      <Name>Persistence</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -8,13 +8,14 @@ namespace Models
     {
         //clave primaria para la base de datos
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string Id { get; set; }
         //establecemos las propiedades de modo de "solo lectura" al no tener el Set para cambiar sus valores
         [Required]
-        public char Name { get; }
+        public string Name { get; set; }
         [Required]
-        public double Probability { get; }
-        public double Information { get; }
+        public float Probability { get; set; }
+        public float Information { get; set; }
         public string Codigo { get; set; } = string.Empty; //el codigo es vacio, la fuente es quien luego lo establece
         public int FrecuenciaDeAparicion { get; set; }
 
@@ -26,24 +27,22 @@ namespace Models
             Id = Guid.NewGuid().ToString();
         }
         //recibimos el nombre y la probabilidad al crear la letra, la informacion se calcula en funcoin de la probabilidad
-        public Letra(char name, double probability, int freq, string idFuente)
+        public Letra(string name, double probability, int freq)
         {
-            Id = name.GetHashCode().ToString() + idFuente;
             Name = name;
-            this.Probability = probability;
+            this.Probability = (float)probability;
             //calculamos la informacion segun la ecuacion que depende de la probabilidad
-            Information = Math.Log(1 / probability)/Math.Log(2);
+            Information = (float) (Math.Log(1 / probability)/Math.Log(2));
             FrecuenciaDeAparicion = freq;
-            IdFuente = idFuente;
         }
 
-        public Letra(char name, double probability)
-        {
-            Id = new Guid().ToString();
-            Name = name;
-            this.Probability = probability;
-            //calculamos la informacion segun la ecuacion que depende de la probabilidad
-            Information = Math.Log(1 / probability)/Math.Log(2);
-        }
+        //public Letra(char name, double probability)
+        //{
+        //    Id = new Guid().ToString();
+        //    Name = name;
+        //    this.Probability = probability;
+        //    //calculamos la informacion segun la ecuacion que depende de la probabilidad
+        //    Information = Math.Log(1 / probability)/Math.Log(2);
+        //}
     }
 }

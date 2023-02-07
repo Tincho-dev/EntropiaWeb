@@ -5611,7 +5611,7 @@ jQuery.each( {
 	pageY: true,
 	shiftKey: true,
 	view: true,
-	"char": true,
+	"string": true,
 	code: true,
 	charCode: true,
 	key: true,

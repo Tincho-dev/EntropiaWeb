@@ -1,5 +1,5 @@
 ﻿using Models;
-using Persistanse;
+using Persistence;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,8 +46,8 @@ namespace Services
         {
             using (var db = new ApplicationDbContext())
             {
-                var letra = new Letra(Letra.Name ,Letra.Probability,Letra.FrecuenciaDeAparicion,Letra.IdFuente);
-
+                var letra = new Letra(Letra.Name ,Letra.Probability,Letra.FrecuenciaDeAparicion);
+                letra.Id = letra.IdFuente + letra.Name;
                 db.Letras.Add(letra);
                 db.SaveChanges();
             }
@@ -70,6 +70,7 @@ namespace Services
                 throw new Exception(e.Message);
             }
         }
+
     }
 }
 

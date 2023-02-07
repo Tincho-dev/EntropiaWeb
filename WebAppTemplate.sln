@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Model\Models.cspr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{A419A454-B088-4773-BBE4-9C0A99316C08}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistance", "Persistanse\Persistance.csproj", "{CF9BAC44-EA14-4784-9B1D-5BA1C358677D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence", "Persistanse\Persistence.csproj", "{CF9BAC44-EA14-4784-9B1D-5BA1C358677D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{A24044F5-C068-4AF3-87B7-D2722E7E2408}"
 EndProject

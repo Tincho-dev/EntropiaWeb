@@ -1,7 +1,8 @@
 ﻿using Models;
-using Persistanse;
+using Persistence;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 namespace Services
@@ -36,9 +37,8 @@ namespace Services
                 result = (
                         from f in db.Fuentes.Where(x=>x.IdFuente == id)
                         select f
-                     ).Single();
+                     ).Include(f => f.Letras).Single();
             }
-
             return result;
         }
 
@@ -47,12 +47,14 @@ namespace Services
             using (var db = new ApplicationDbContext())
             {
                 var fuente = new Fuente(Fuente.CadenaFuente);
-                db.Fuentes.Add(fuente);
-                db.SaveChanges();
+                fuente.IdFuente = Fuente.IdFuente;
                 foreach (var Letra in fuente.Letras)
                 {
-                    LetraService.Create(Letra);
+                    Letra.IdFuente = (Fuente.IdFuente);
+                    db.Letras.Add(Letra);
                 }
+                db.Fuentes.Add(fuente);
+                db.SaveChanges();
             }
         }
 

@@ -5611,7 +5611,7 @@ jQuery.each( {
 	pageY: true,
 	shiftKey: true,
 	view: true,
-	"char": true,
+	"string": true,
 	code: true,
 	charCode: true,
 	key: true,
@@ -8781,7 +8781,7 @@ var
 	 */
 	transports = {},
 
-	// Avoid comment-prolog char sequence (#10098); must appease lint and evade compression
+	// Avoid comment-prolog string sequence (#10098); must appease lint and evade compression
 	allTypes = "*/".concat( "*" ),
 
 	// Anchor tag for parsing the document origin

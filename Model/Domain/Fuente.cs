@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 namespace Models
@@ -8,15 +9,16 @@ namespace Models
     public class Fuente
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string IdFuente { get; set; }
         [Required]
         public List<Letra> Letras { get; set; } = new List<Letra>();
         public int N { get; set; }
         [Display(Name = "Cadena usada para generar la fuente: ")]
         public string CadenaFuente { get; set; } = "";
-        public double EntropiaMaxima { get; set; }
+        public float EntropiaMaxima { get; set; }
         public string CadenaCodificada { get; set; } = string.Empty;
-        public double EntropiaDeLaFuente { get; set; }
+        public float EntropiaDeLaFuente { get; set; }
 
         public Fuente()
         {
@@ -25,31 +27,37 @@ namespace Models
 
         public Fuente(string cadena)
         {
-            IdFuente = cadena.GetHashCode().ToString();
+            //IdFuente = cadena.GetHashCode().ToString();
             CadenaFuente = cadena;
             Letras = StringToListLetra();
             EstablecerCodigoACadaLetra();
             N = Letras.Count;
-            EntropiaMaxima = Math.Log(N)/Math.Log(2);
+            EntropiaMaxima = (float) (Math.Log10(N)/Math.Log10(2));
             CadenaCodificada = CodificarCadena();
             //revisar codigo de entropia de la fuente
             EntropiaDeLaFuente = CalcularEntropiaDeLaFuente();
         }
 
-        public double InformacionDeCadena()
+        public float InformacionDeCadena()
         {
-            double suma = 0;
+            float suma = 0;
             foreach (Letra letra in Letras)
             {
                 //informacion individual de cada simbolo
-                suma += Math.Log(1 / letra.Probability)/Math.Log(2);
+                suma += (float) (Math.Log(1 / letra.Probability)/Math.Log(2));
             }
             return suma;
         }
 
-        public double CalcularEntropiaDeLaFuente()
+        public float CalcularEntropiaDeLaFuente()
         {
-            return InformacionDeCadena() / Letras.Count;
+            float suma = 0;
+            foreach (Letra letra in Letras)
+            {
+                //informacion individual de cada simbolo
+                suma += letra.Probability * (float)(Math.Log(1 / letra.Probability) / Math.Log(2));
+            }
+            return suma;
         }
 
         public List<Letra> StringToListLetra()
@@ -68,7 +76,9 @@ namespace Models
 
                 int total = s1.Length;
                 double probabilidad = (double)freq / total;
-                l.Add(new Letra(item, probabilidad, freq, IdFuente));
+                var letraAgregar = new Letra(item.ToString(), probabilidad, freq);
+                letraAgregar.Id = letraAgregar.GetHashCode().ToString();
+                l.Add(letraAgregar);
             }
             return l;
         }
@@ -96,7 +106,7 @@ namespace Models
             foreach (var item in CadenaFuente)
             {
                 var codigo = (from l in Letras
-                              where (l.Name == item)
+                              where (l.Name == item.ToString())
                               select l.Codigo).Single();
                 result += codigo.ToString();
             }

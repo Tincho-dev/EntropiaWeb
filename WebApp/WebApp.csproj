@@ -214,6 +214,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Views\Fuente\Chart.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -295,9 +296,9 @@
       <Project>{ec9719db-101b-4451-b9d1-51308b517506}</Project>
       <Name>Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Persistanse\Persistance.csproj">
+    <ProjectReference Include="..\Persistanse\Persistence.csproj">
       <Project>{cf9bac44-ea14-4784-9b1d-5ba1c358677d}</Project>
-      <Name>Persistance</Name>
+      <Name>Persistence</Name>
     </ProjectReference>
     <ProjectReference Include="..\Services\Services.csproj">
       <Project>{a419a454-b088-4773-bbe4-9c0a99316c08}</Project>

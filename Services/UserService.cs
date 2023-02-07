@@ -1,6 +1,6 @@
 ﻿using Model;
 using Model.Custom;
-using Persistanse;
+using Persistence;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;

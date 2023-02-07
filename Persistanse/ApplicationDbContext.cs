@@ -3,7 +3,7 @@ using Model;
 using Models;
 using System.Data.Entity;
 
-namespace Persistanse
+namespace Persistence
 {
     public class ApplicationDbContext : IdentityDbContext
     {

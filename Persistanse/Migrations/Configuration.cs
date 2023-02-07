@@ -1,15 +1,15 @@
-namespace Persistanse.Migrations
+namespace Persistence.Migrations
 {
     using System.Data.Entity.Migrations;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Persistanse.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<Persistence.ApplicationDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(Persistanse.ApplicationDbContext context)
+        protected override void Seed(Persistence.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

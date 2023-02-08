@@ -20,16 +20,20 @@
             </div>
             <div class="modal-body" style="color:black">
                 <p>
-                    <h6>En esta vista se muestran las Fuentes que se han creado</h6> <br />
+                    <h6>En esta vista se muestran el detalle de la Fuente seleccionada</h6> <br />
 
-                    <b>Numero de simbolos: </b> Se refiere a la cantidad de simbolos distintos que posee la fuente <br />
-                    <b>Cadena Generadora: </b>  Se refiere a la cadena de longitud L que se uso para crear la fuente y
-                    reconocer los simbolos que puede generar y su frecuencia de aparicion <br />
+                    <b>Cantiad de simbolos: </b> Se refiere a la cantidad de simbolos distintos que posee la fuente <br />
+                    <b>Secuencia de simbolos: </b> Muestra la Cadena con la que se originó la fuente<br />
                     <b>Entropia Maxima: </b> Es la informacion promedio que tendria la fuente si todos sus simbolos fueran
                     igualmente probales. <br />
+                    <b>Cadena Codificada: </b> Muestra la Cadena con la que se originó la fuente, pero ya codificada con 0 y 1<br />
+
                     <b>Entropia de la Fuente: </b> Esta es menor a la Entropia maxima ya que hay simbolos
                     que son mas probables que aparezcan y por tanto con una menor informacion asociada
                     lo que disminuye la informacion promedio de la fuente. <br />
+                    <b>Informacion de la Cadena: </b> Informacion total del mensaje, segun la formula: <br />
+                    Sumatoria de las informaciones individuales de cada simbolo
+
                 </p>
             </div>
             <div class="modal-footer">
@@ -39,6 +43,8 @@
         </div>
     </div>
 </div>
+
+<!--Tabla horizontal con los datos de la fuente-->
 <div>
     <h4>Fuente</h4>
     <hr />
@@ -92,16 +98,23 @@
 
     </dl>
 </div>
-@Model.Modular()
+
+@*<h3>
+    Linea Base: @Model.LineaBase()
+</h3>*@
+
+
 <div style="flex-wrap">
     <table>
         <tr>
+            <!--Grafico del Histograma-->
             <td>
                 <canvas id="myChart"></canvas>
             </td>
         </tr>
         <tr>
             <td>
+                <!--Tabla Con informacion de cada letra-->
 
                 <table class="table">
                     <tr>
@@ -122,17 +135,17 @@
                         </th>
                         <th></th>
                     </tr>
-                    @foreach (var item in Model.Letras.OrderBy(x => x.FrecuenciaDeAparicion))
+                    @foreach (var item in Model.Letras.OrderByDescending(x => x.FrecuenciaDeAparicion))
                     {
                         <tr>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Name)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Probability)
+                                @((item.Probability*100).ToString("0.##")) %
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Information)
+                                @Html.DisplayFor(modelItem => item.Information) bit
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Codigo)

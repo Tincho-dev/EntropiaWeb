@@ -11,7 +11,8 @@ namespace Models
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string Id { get; set; }
         //establecemos las propiedades de modo de "solo lectura" al no tener el Set para cambiar sus valores
-        [Required]
+        
+        [MaxLength(1)]
         public string Name { get; set; }
         [Required]
         public float Probability { get; set; }

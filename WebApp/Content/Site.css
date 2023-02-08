@@ -13,11 +13,11 @@
     flex-direction:column;
 }
 
+
 .MiEstilo {
     color: #264653;
     text-decoration: underline;
 }
-
 
 .botones{
     display:flex;
@@ -99,3 +99,6 @@ textarea {
 
 }
 
+#myChart{
+    background-color:white;
+}

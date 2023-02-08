@@ -22,6 +22,7 @@ namespace Persistence
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Letra>().Property(m => m.Name).IsOptional();
             base.OnModelCreating(modelBuilder);
         }
 

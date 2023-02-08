@@ -1,5 +1,6 @@
 ﻿using Models;
 using Services;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace WebApp.Controllers
@@ -22,6 +23,8 @@ namespace WebApp.Controllers
         public ActionResult Details(string id)
         {
             var model = FuenteService.GetDetails(id);
+            ViewData["Probability"] = model.Letras.Select(l => l.Probability).ToArray();
+            ViewData["Name"] = model.Letras.Select(l => l.Name).ToArray();
             return View("Details", model);
         }
 

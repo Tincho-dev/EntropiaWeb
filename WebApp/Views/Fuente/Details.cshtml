@@ -1,16 +1,50 @@
 ﻿@model Models.Fuente
-@Scripts.Render("~/Chart.js")
 
 @{ ViewBag.Title = "Details"; }
 
-<h2>Details</h2>
+<h2>Detalle de la Fuente</h2>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="width:100px; float:right; margin-bottom:10px;">
+    Manual
+</button>
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="color:black">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="color:black">
+                <p>
+                    <h6>En esta vista se muestran las Fuentes que se han creado</h6> <br />
+
+                    <b>Numero de simbolos: </b> Se refiere a la cantidad de simbolos distintos que posee la fuente <br />
+                    <b>Cadena Generadora: </b>  Se refiere a la cadena de longitud L que se uso para crear la fuente y
+                    reconocer los simbolos que puede generar y su frecuencia de aparicion <br />
+                    <b>Entropia Maxima: </b> Es la informacion promedio que tendria la fuente si todos sus simbolos fueran
+                    igualmente probales. <br />
+                    <b>Entropia de la Fuente: </b> Esta es menor a la Entropia maxima ya que hay simbolos
+                    que son mas probables que aparezcan y por tanto con una menor informacion asociada
+                    lo que disminuye la informacion promedio de la fuente. <br />
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                @*<button type="button" class="btn btn-primary">Save changes</button>*@
+            </div>
+        </div>
+    </div>
+</div>
 <div>
     <h4>Fuente</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.N)
+            Cantidad de Simbolos:
         </dt>
 
         <dd>
@@ -18,7 +52,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.CadenaFuente)
+            Secuencia de Simbolos:
         </dt>
 
         <dd>
@@ -26,15 +60,15 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.EntropiaMaxima)
+            Entropia Maxima:
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.EntropiaMaxima)
+            @Html.DisplayFor(model => model.EntropiaMaxima) bit/simbolo
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.CadenaCodificada)
+            Cadena Codificada:
         </dt>
 
         <dd>
@@ -42,59 +76,106 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.EntropiaDeLaFuente)
+            Entropia de la Fuente:
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.EntropiaDeLaFuente)
+            @Html.DisplayFor(model => model.EntropiaDeLaFuente) bit/simbolo
+        </dd>
+        <dt>
+            Informacion de la Cadena:
+        </dt>
+
+        <dd>
+            @Model.InformacionDeCadena() bit
         </dd>
 
     </dl>
 </div>
-<table class="table">
-    <tr>
-        <th>
-            Letra
-        </th>
-        <th>
-            Probabilidad
-        </th>
-        <th>
-            Informacion
-        </th>
-        <th>
-            Codigo
-        </th>
-        <th>
-            Frecuencia de aparicion
-        </th>
-        <th></th>
-    </tr>
-    @foreach (var item in Model.Letras.OrderBy(x => x.FrecuenciaDeAparicion))
-    {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.Name)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Probability)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Information)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Codigo)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.FrecuenciaDeAparicion)
-    </td>
-</tr>}
+@Model.Modular()
+<div style="flex-wrap">
+    <table>
+        <tr>
+            <td>
+                <canvas id="myChart"></canvas>
+            </td>
+        </tr>
+        <tr>
+            <td>
 
-</table>
+                <table class="table">
+                    <tr>
+                        <th>
+                            Letra
+                        </th>
+                        <th>
+                            Probabilidad
+                        </th>
+                        <th>
+                            Informacion
+                        </th>
+                        <th>
+                            Codigo
+                        </th>
+                        <th>
+                            Frecuencia de aparicion
+                        </th>
+                        <th></th>
+                    </tr>
+                    @foreach (var item in Model.Letras.OrderBy(x => x.FrecuenciaDeAparicion))
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Probability)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Information)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Codigo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FrecuenciaDeAparicion)
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
 
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.IdFuente }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<script>
+    const ctx = document.getElementById('myChart');
+
+    const probability = @Html.Raw(Json.Encode(ViewData["Probability"]));
+    const name = @Html.Raw(Json.Encode(ViewData["Name"]));
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: name,
+            datasets: [{
+                label: 'Probabilidad de aparicion de cada letra',
+                data: probability,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+
+<p><a class="btn" href='@Url.Action("Index", "Fuente")'>Volver a la Lista</a></p>

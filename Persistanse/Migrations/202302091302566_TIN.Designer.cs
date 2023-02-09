@@ -7,13 +7,13 @@ namespace Persistence.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.0-30225")]
-    public sealed partial class initial : IMigrationMetadata
+    public sealed partial class TIN : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(initial));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(TIN));
         
         string IMigrationMetadata.Id
         {
-            get { return "202302081423049_initial"; }
+            get { return "202302091302566_TIN"; }
         }
         
         string IMigrationMetadata.Source

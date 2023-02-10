@@ -21,7 +21,7 @@
         Manual
     </button>
 </div>
-<div class="row" style="display:inline-flex; flex-wrap:nowrap; justify-content:center">
+<div class="row" style="display: inline-flex; flex-wrap: nowrap; justify-content: center;">
     @if (Request.IsAuthenticated)
     {
 
@@ -57,10 +57,12 @@
     </div>
 
     <div class="col-md-4">
-        <h2>Fuentes</h2>
-        <p>Gestionar Fuentes</p>
-        <p><a class="btn" href='@Url.Action("Index", "Fuente")'>Fuentes &raquo;</a></p>
+        <h2 style="font-size:40px">Fuentes</h2>
+        <p style="font-size: 30px">Gestionar Fuentes</p>
+        <p><a class="btn" style="font-size: 30px" href='@Url.Action("Index", "Fuente")'>Fuentes &raquo;</a></p>
     </div>
+
+    <!--Gestion de usuario, viene con la plantilla -->
 
     @*<div class="col-md-4">
                <h2>Usuarios</h2>

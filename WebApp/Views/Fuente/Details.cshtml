@@ -81,7 +81,7 @@
             @if (@Model.CadenaCodificada.Length > 150)
             {
                 <p id="CadenaCodificada" style="word-wrap: break-word; max-width: 300ch;">
-                    @Model.CadenaCodificada.Substring(0, 100)
+                    @Model.CadenaCodificada.Substring(0, 100)...
                     <button type="button" class="btn btn-primary pull-right" href="#" Onclick="ShowMore()" >Mostrar mas</button>
                 </p>
             }
@@ -178,7 +178,7 @@
     public string GetCodigoCorto()
     {
         
-        return @Model.CadenaCodificada.Length>150? Model.CadenaCodificada.Substring(0,100) : Model.CadenaCodificada;
+        return @Model.CadenaCodificada.Length>150? Model.CadenaCodificada.Substring(0,100) + "..." : Model.CadenaCodificada;
     }
 
 }

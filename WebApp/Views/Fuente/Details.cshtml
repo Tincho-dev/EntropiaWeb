@@ -78,7 +78,17 @@
         </dt>
 
         <dd>
-            @Model.CadenaCodificada     
+            @if(@Model.CadenaCodificada.Length > 150){
+            <p id="CadenaCodificada" style="word-wrap: break-word; max-width: 300ch;">
+                @Model.CadenaCodificada.Substring(0, 100)
+                <a href="#" Onclick="RazorFunction()">Read more</a>
+            </p>
+                }else {
+            <p>
+                @Model.CadenaCodificada
+            </p>
+            }
+
         </dd>
 
         <dt>
@@ -100,10 +110,10 @@
 </div>
 
 @*<h3>
-    Linea Base: @Model.LineaBase()
-</h3>*@
+        Linea Base: @Model.LineaBase()
+    </h3>*@
 
-
+<!--Informaicon de las letras-->
 <div style="flex-wrap">
     <table>
         <tr>
@@ -137,23 +147,23 @@
                     </tr>
                     @foreach (var item in Model.Letras.OrderByDescending(x => x.FrecuenciaDeAparicion))
                     {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Name)
-                            </td>
-                            <td>
-                                @((item.Probability*100).ToString("0.##")) %
-                            </td>
-                            <td>
-                                @item.Information.ToString("0.##") bit
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Codigo)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.FrecuenciaDeAparicion)
-                            </td>
-                        </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @((item.Probability*100).ToString("0.##")) %
+                        </td>
+                        <td>
+                            @item.Information.ToString("0.##") bit
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Codigo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FrecuenciaDeAparicion)
+                        </td>
+                    </tr>
                     }
                 </table>
             </td>
@@ -161,9 +171,17 @@
     </table>
 </div>
 
+@functions{
+ public string GetCodigoCompleto()
+    {
+        return @Model.CadenaCodificada;
+    }
 
+}
+
+@section Scripts
+{
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <script>
     const ctx = document.getElementById('myChart');
 
@@ -189,6 +207,11 @@
         }
     });
 </script>
+<script>
+    function RazorFunction() {
+        $("#CadenaCodificada").html('@GetCodigoCompleto()');
+    }
 
-
+</script>
+}
 <p><a class="btn" href='@Url.Action("Index", "Fuente")'>Volver a la Lista</a></p>

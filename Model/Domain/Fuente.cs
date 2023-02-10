@@ -40,6 +40,8 @@ namespace Models
         //Constructor que en base a ala cadena que genera calcula todos los datos
         public Fuente(string cadena)
         {
+            //Validamos que no sea nula la cadena, si lo fuera le establecemos un string vacio
+            if (cadena == null) CadenaFuente = "";
             CadenaFuente = cadena;
             //Obetnemos todas las letras (simbolos) que puede generar usando la Funcion StringToListLetra()
             Letras = StringToListLetra();
@@ -92,36 +94,39 @@ namespace Models
         {
             //crea una lista para guardar las letras de la fuente, es la que devolveremos
             List<Letra> l = new List<Letra>();
-
-            //crea una cadena de caracteres que representa cada letra
-            char[] caracteres = CadenaFuente.ToCharArray();
-            //obtenemos el total de caracteres
-            int total = caracteres.Length;
-
-            //guardamos los daots en una variable sin elementos repetidos
-            char[] letrasDistintas = caracteres.Distinct().ToArray();
-
-            // creamos una clase letra por cada letra en la cadena y la guardamos en la lista
-            //Recorremos 
-            foreach (char item in letrasDistintas)
+            if (CadenaFuente != null)
             {
-                //Obtenemos la cantidad e veces que aparece este item en la cadena orifinal
-                int freq = caracteres.Count(f => (f == item));
-                //Calculamos la probabilidad de aparicion de dicho item (simbolo)
-                double probabilidad = (double) freq / total;
-                //Creamos la nueva letra y
-                //le pasamos los datos del simbolo, su probabilidad
-                //y la cantidad ed veces que aparece en la cadena original
-                Letra letraAgregar = new Letra(item.ToString(), probabilidad, freq);
-                //Le creamos un id pseudo aleatorio para la base de datos
-                letraAgregar.Id = letraAgregar.GetHashCode().ToString();
-                //Agregamos la nueva letra a la lista que devolveremos
-                l.Add(letraAgregar);
-                //Repetimos hasta que se acaben las letras
-            }
 
-            //devolvemos la lista de letras con sus datos cargados
-            return l;
+                //crea una cadena de caracteres que representa cada letra
+                char[] caracteres = CadenaFuente.ToCharArray();
+                //obtenemos el total de caracteres
+                int total = caracteres.Length;
+
+                //guardamos los daots en una variable sin elementos repetidos
+                char[] letrasDistintas = caracteres.Distinct().ToArray();
+
+                // creamos una clase letra por cada letra en la cadena y la guardamos en la lista
+                //Recorremos 
+                foreach (char item in letrasDistintas)
+                {
+                    //Obtenemos la cantidad e veces que aparece este item en la cadena orifinal
+                    int freq = caracteres.Count(f => (f == item));
+                    //Calculamos la probabilidad de aparicion de dicho item (simbolo)
+                    double probabilidad = (double)freq / total;
+                    //Creamos la nueva letra y
+                    //le pasamos los datos del simbolo, su probabilidad
+                    //y la cantidad ed veces que aparece en la cadena original
+                    Letra letraAgregar = new Letra(item.ToString(), probabilidad, freq);
+                    //Le creamos un id pseudo aleatorio para la base de datos
+                    letraAgregar.Id = letraAgregar.GetHashCode().ToString();
+                    //Agregamos la nueva letra a la lista que devolveremos
+                    l.Add(letraAgregar);
+                    //Repetimos hasta que se acaben las letras
+                }
+
+                //devolvemos la lista de letras con sus datos cargados
+            }
+                return l;
         }
 
         //METODO PRELIMINAR PARA 

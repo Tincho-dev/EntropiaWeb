@@ -46,7 +46,9 @@ namespace Services
         {
             using (var db = new ApplicationDbContext())
             {
-                var fuente = new Fuente(Fuente.CadenaFuente);
+                //Validamos que no sea null la fuente, si lo es le establecemos un string vacio
+                string cadena = Fuente.CadenaFuente ?? "";
+                var fuente = new Fuente(cadena);
                 fuente.IdFuente = Fuente.IdFuente;
                 foreach (var Letra in fuente.Letras)
                 {

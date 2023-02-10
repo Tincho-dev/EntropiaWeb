@@ -78,15 +78,18 @@
         </dt>
 
         <dd>
-            @if(@Model.CadenaCodificada.Length > 150){
-            <p id="CadenaCodificada" style="word-wrap: break-word; max-width: 300ch;">
-                @Model.CadenaCodificada.Substring(0, 100)
-                <a href="#" Onclick="RazorFunction()">Read more</a>
-            </p>
-                }else {
-            <p>
-                @Model.CadenaCodificada
-            </p>
+            @if (@Model.CadenaCodificada.Length > 150)
+            {
+                <p id="CadenaCodificada" style="word-wrap: break-word; max-width: 300ch;">
+                    @Model.CadenaCodificada.Substring(0, 100)
+                    <button type="button" class="btn btn-primary pull-right" href="#" Onclick="ShowMore()" >Mostrar mas</button>
+                </p>
+            }
+            else
+            {
+                <p>
+                    @Model.CadenaCodificada
+                </p>
             }
 
         </dd>
@@ -147,23 +150,23 @@
                     </tr>
                     @foreach (var item in Model.Letras.OrderByDescending(x => x.FrecuenciaDeAparicion))
                     {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
-                            @((item.Probability*100).ToString("0.##")) %
-                        </td>
-                        <td>
-                            @item.Information.ToString("0.##") bit
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Codigo)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FrecuenciaDeAparicion)
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @((item.Probability*100).ToString("0.##")) %
+                            </td>
+                            <td>
+                                @item.Information.ToString("0.##") bit
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Codigo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FrecuenciaDeAparicion)
+                            </td>
+                        </tr>
                     }
                 </table>
             </td>
@@ -172,17 +175,18 @@
 </div>
 
 @functions{
- public string GetCodigoCompleto()
+    public string GetCodigoCorto()
     {
-        return @Model.CadenaCodificada;
+        
+        return @Model.CadenaCodificada.Length>150? Model.CadenaCodificada.Substring(0,100) : Model.CadenaCodificada;
     }
 
 }
 
 @section Scripts
 {
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
     const ctx = document.getElementById('myChart');
 
     const probability = @Html.Raw(Json.Encode(ViewData["Probability"]));
@@ -206,12 +210,23 @@
             }
         }
     });
-</script>
-<script>
-    function RazorFunction() {
-        $("#CadenaCodificada").html('@GetCodigoCompleto()');
+    </script>
+    <script>
+        function ShowMore() {
+            if (@Model.CadenaCodificada.Length > 100) {
+
+                $("#CadenaCodificada").html('@Model.CadenaCodificada');
+                $("#CadenaCodificada").append('<button type="button" class="btn btn-primary pull-right" href="#" Onclick="ShowLess()">Mostrar menos</button>');
+            }
     }
 
-</script>
+        function ShowLess() {
+            if (@Model.CadenaCodificada.Length > 100) {
+                $("#CadenaCodificada").html('@GetCodigoCorto()');
+                $("#CadenaCodificada").append('<button type="button" class="btn btn-primary pull-right" href="#" Onclick="ShowMore()">Mostrar mas</button>');
+            }
+    }
+
+    </script>
 }
 <p><a class="btn" href='@Url.Action("Index", "Fuente")'>Volver a la Lista</a></p>

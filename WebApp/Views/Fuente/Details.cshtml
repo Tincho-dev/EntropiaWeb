@@ -4,9 +4,14 @@
 
 <h2>Detalle de la Fuente</h2>
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="width:100px; float:right; margin-bottom:10px;">
-    Manual
-</button>
+<div>
+    <p>
+        <a class="btn" href='@Url.Action("Index", "Fuente")'>Volver a la Lista</a>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="width:100px; float:right; margin-bottom:10px;">
+            Manual
+        </button>
+    </p>
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -87,7 +92,7 @@
             }
             else
             {
-                <p>
+                <p style="word-wrap: break-word;">
                     @Model.CadenaCodificada
                 </p>
             }
@@ -117,20 +122,19 @@
     </h3>*@
 
 <!--Informaicon de las letras-->
-<div style="flex-wrap">
+<div style="flex-wrap:wrap">
     <table>
         <tr>
             <!--Grafico del Histograma-->
-            <td>
+            <td  style="border-radius: 5px;">
                 <canvas id="myChart"></canvas>
             </td>
         </tr>
         <tr>
-            <td>
+            <td  style="border-radius: 5px;">
                 <!--Tabla Con informacion de cada letra-->
-
                 <table class="table">
-                    <tr>
+                    <tr  style="border-radius: 5px;">
                         <th>
                             Letra
                         </th>

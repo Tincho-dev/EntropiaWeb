@@ -64,6 +64,8 @@
     <Compile Include="Custom\UserGrid.cs" />
     <Compile Include="Domain\Fuente.cs" />
     <Compile Include="Domain\Letra.cs" />
+    <Compile Include="Huffman\HuffmanTree.cs" />
+    <Compile Include="Huffman\Node.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

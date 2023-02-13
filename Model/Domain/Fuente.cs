@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -46,7 +47,7 @@ namespace Models
             //Obetnemos todas las letras (simbolos) que puede generar usando la Funcion StringToListLetra()
             Letras = StringToListLetra();
             //Establecemos el codigo en base a la probabilidad a cada letra
-            EstablecerCodigoACadaLetra();
+            EstablecerCodigoHuffmanACadaLetra();
             //Cantidad de Letras
             N = Letras.Count;
             //Entropia maxima = Log2 Nç
@@ -193,6 +194,23 @@ namespace Models
             }
             //devolvemos el valor a la lista con los nuevos valores de los codigos y los convertimos en una lsita
             Letras = LetrasArray.ToList();
+        }
+        public void EstablecerCodigoHuffmanACadaLetra()
+        {
+            HuffmanTree huffmanTree = new HuffmanTree();
+            huffmanTree.Build(CadenaFuente);
+            Letras = huffmanTree.Encode(Letras);
+        }
+        public string DecodificarHuffman()
+        {
+            //Usamos el codigo de Huffman para crear el arbol
+            HuffmanTree huffmanTree = new HuffmanTree();
+            huffmanTree.Build(CadenaFuente);
+            //Hacemos un cambio de tipo para decodificar con el tipo de dato que necesita Huffman
+            var res = new BitArray(CadenaCodificada.Select(c => c == '1').ToArray());
+            BitArray bits = new BitArray(res);
+
+            return huffmanTree.Decode(res);
         }
     }
 }

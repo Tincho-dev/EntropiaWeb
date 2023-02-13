@@ -1,6 +1,9 @@
 ﻿@model Models.Fuente
+@using Models
+@using System.Collections
+@using System.Threading.Tasks
 
-@{ ViewBag.Title = "Details"; }
+@{ ViewBag.Title = "Details";;}
 
 <h2>Detalle de la Fuente</h2>
 <!-- Button trigger modal -->
@@ -12,7 +15,6 @@
         </button>
     </p>
 </div>
-
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -63,11 +65,19 @@
         </dd>
 
         <dt>
-            Secuencia de Simbolos:
+            Simbolos:
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.CadenaFuente)
+        </dd>
+
+        <dt>
+            Cadena Decodificada:
+        </dt>
+
+        <dd>
+            @Model.DecodificarHuffman()
         </dd>
 
         <dt>
@@ -87,7 +97,7 @@
             {
                 <p id="CadenaCodificada" style="word-wrap: break-word; max-width: 300ch;">
                     @Model.CadenaCodificada.Substring(0, 100)...
-                    <button type="button" class="btn btn-primary pull-right" href="#" Onclick="ShowMore()" >Mostrar mas</button>
+                    <button type="button" class="btn btn-primary pull-right" href="#" Onclick="ShowMore()">Mostrar mas</button>
                 </p>
             }
             else
@@ -107,7 +117,7 @@
             @Model.EntropiaDeLaFuente.ToString("0.##") bit /simbolo
         </dd>
         <dt>
-            Informacion de la Cadena:
+            Informacion total:
         </dt>
 
         <dd>
@@ -126,15 +136,15 @@
     <table>
         <tr>
             <!--Grafico del Histograma-->
-            <td  style="border-radius: 5px;">
+            <td style="border-radius: 5px;">
                 <canvas id="myChart"></canvas>
             </td>
         </tr>
         <tr>
-            <td  style="border-radius: 5px;">
+            <td style="border-radius: 5px;">
                 <!--Tabla Con informacion de cada letra-->
                 <table class="table">
-                    <tr  style="border-radius: 5px;">
+                    <tr style="border-radius: 5px;">
                         <th>
                             Letra
                         </th>
@@ -179,12 +189,13 @@
 </div>
 
 @functions{
+
+
     public string GetCodigoCorto()
     {
-        
-        return @Model.CadenaCodificada.Length>150? Model.CadenaCodificada.Substring(0,100) + "..." : Model.CadenaCodificada;
-    }
 
+        return @Model.CadenaCodificada.Length > 150 ? Model.CadenaCodificada.Substring(0, 100) + "..." : Model.CadenaCodificada;
+    }
 }
 
 @section Scripts
@@ -223,14 +234,12 @@
                 $("#CadenaCodificada").append('<button type="button" class="btn btn-primary pull-right" href="#" Onclick="ShowLess()">Mostrar menos</button>');
             }
     }
-
         function ShowLess() {
             if (@Model.CadenaCodificada.Length > 100) {
                 $("#CadenaCodificada").html('@GetCodigoCorto()');
                 $("#CadenaCodificada").append('<button type="button" class="btn btn-primary pull-right" href="#" Onclick="ShowMore()">Mostrar mas</button>');
             }
     }
-
     </script>
 }
 <p><a class="btn" href='@Url.Action("Index", "Fuente")'>Volver a la Lista</a></p>
